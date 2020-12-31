@@ -1,0 +1,57 @@
+{
+  "name": "mtu",
+  "version": "0.0.2",
+  "description": "响应式跨平台框架的 Material Design UI 组件库",
+  "type": "module",
+  "main": "main.js",
+  "author": "2279499274@qq.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apprat/mtu"
+  },
+  "exports": {
+    ".": "./main.js",
+    "./style": "./styles/default.js",
+    "./icon": "./src/icon/index.js",
+    "./ripple": "./src/ripple/index.js",
+    "./appbar": "./src/appbar/index.js",
+    "./button": "./src/botton/index.js",
+    "./card": "./src/card/index.js",
+    "./checkbox": "./src/checkbox/index.js",
+    "./datepicker": "./src/datepicker/index.js",
+    "./dialog": "./src/dialog/index.js",
+    "./drawer": "./src/drawer/index.js",
+    "./list": "./src/list/index.js",
+    "./list-item": "./src/list/item.js",
+    "./menu": "./src/menu/index.js",
+    "./meun-group": "./src/meun/group.js",
+    "./menu-item": "./src/menu/item.js",
+    "./progress": "./src/progress/index.js",
+    "./radio": "./src/radio/index.js",
+    "./rating": "./src/rating/index.js",
+    "./scrollbar": "./src/scrollbar/index.js",
+    "./seek": "./src/seek/index.js",
+    "./switch": "./src/switch/index.js",
+    "./tab": "./src/tab/index.js",
+    "./tab-item": "./src/tab/item.js",
+    "./toast": "./src/toast/index.js",
+    "./tooltip": "./src/tooltip/index.js"
+  },
+  "keywords": [
+    "Mtu",
+    "UI",
+    "UI组件库",
+    "实用工具",
+    "web component",
+    "跨平台",
+    "跨框架",
+    "UI框架"
+  ],
+  "devDependencies": {
+    "koa": "^2.13.0",
+    "koa-static": "^5.0.0",
+    "rollup-plugin-css-only": "^3.0.0",
+    "rollup-plugin-terser": "^7.0.2"
+  }
+}
