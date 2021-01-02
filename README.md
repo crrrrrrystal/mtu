@@ -84,8 +84,8 @@ module.exports = {
 
 ```css
 body {
-  --color-primary: 25, 118, 210; /**主要颜色rgba**/
-  --color-accent: 220, 0, 78; /**选中颜色rgba**/
+  --color-primary: 25, 118, 210; /**主要颜色rgb**/
+  --color-accent: 220, 0, 78; /**选中颜色rgb**/
 
   --color-background: #FAFAFA; /**背景颜色**/
   --color-background-bar: #F5F5F5; /**选应用栏颜色**/
