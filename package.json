@@ -1,6 +1,6 @@
 {
   "name": "mtu",
-  "version": "0.0.2",
+  "version": "0.0.21",
   "description": "响应式跨平台框架的 Material Design UI 组件库",
   "type": "module",
   "main": "main.js",
@@ -12,9 +12,7 @@
   },
   "exports": {
     ".": "./main.js",
-    "./style": "./styles/default.js",
-    "./icon": "./src/icon/index.js",
-    "./ripple": "./src/ripple/index.js",
+    "./style": "./styles/default.css",
     "./appbar": "./src/appbar/index.js",
     "./button": "./src/botton/index.js",
     "./card": "./src/card/index.js",
@@ -22,6 +20,7 @@
     "./datepicker": "./src/datepicker/index.js",
     "./dialog": "./src/dialog/index.js",
     "./drawer": "./src/drawer/index.js",
+    "./icon": "./src/icon/index.js",
     "./list": "./src/list/index.js",
     "./list-item": "./src/list/item.js",
     "./menu": "./src/menu/index.js",
@@ -30,8 +29,11 @@
     "./progress": "./src/progress/index.js",
     "./radio": "./src/radio/index.js",
     "./rating": "./src/rating/index.js",
+    "./ripple": "./src/ripple/index.js",
     "./scrollbar": "./src/scrollbar/index.js",
     "./seek": "./src/seek/index.js",
+    "./swiper": "./src/swiper/index.js",
+    "./swiper-item": "./src/swiper/item.js",
     "./switch": "./src/switch/index.js",
     "./tab": "./src/tab/index.js",
     "./tab-item": "./src/tab/item.js",
@@ -47,11 +49,5 @@
     "跨平台",
     "跨框架",
     "UI框架"
-  ],
-  "devDependencies": {
-    "koa": "^2.13.0",
-    "koa-static": "^5.0.0",
-    "rollup-plugin-css-only": "^3.0.0",
-    "rollup-plugin-terser": "^7.0.2"
-  }
+  ]
 }

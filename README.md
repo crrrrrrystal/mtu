@@ -1,15 +1,10 @@
-# Mtu UI组件框架
+# Mtu UI组件库
 
 ```
 $ npm i mtu
 ```
 
-响应式跨框架的UI组件库，基于 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 封装，兼容`React`、`Vue`等前端框架，Mtu 参考了 Google [Material Design](https://material-io.cn/) 设计规范，并针对移动端做了优化，适用于需要同时兼容移动端的Web项目，门户网站、后台管理系统等。
-
-## 预览
-
-在线预览：[https://apprat.gitee.io/mtu](https://apprat.gitee.io/mtu)
-1
+响应式跨框架的UI组件库，不依赖任何库，基于 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 封装，兼容`React`、`Vue`等前端框架，Mtu 参考了 Google [Material Design](https://material-io.cn/) 设计规范，并针对移动端做了优化，适用于需要同时兼容移动端的Web项目，门户网站、后台管理系统等。
 
 ## 引入 Mtu
 
@@ -28,7 +23,7 @@ import 'mtu/radio'
 注意：按需引入时，请务必引入样式。
 
 ```js
-import 'mtu/styles/style.css'
+import 'mtu/style'
 ```
 
 你可以在 `<body>` 添加属性 `theme="dark"` 来使用夜间主题。
@@ -36,9 +31,7 @@ import 'mtu/styles/style.css'
 ## CDN 使用
 
 ```html
-<!-- 引入样式 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mtu/dist/mtu.min.css">
-<!-- 引入组件库 -->
 <script src="https://cdn.jsdelivr.net/npm/mtu/dist/mtu.min.js"></script>
 ```
 
@@ -91,22 +84,22 @@ module.exports = {
 
 ```css
 body {
-  --color-primary: 25, 118, 210;
-  --color-accent: 220, 0, 78;
+  --color-primary: 25, 118, 210; /**主要颜色rgba**/
+  --color-accent: 220, 0, 78; /**选中颜色rgba**/
 
-  --color-background: #FAFAFA;
-  --color-background-bar: #F5F5F5;
-  --color-background-card: #FFFFFF;
+  --color-background: #FAFAFA; /**背景颜色**/
+  --color-background-bar: #F5F5F5; /**选应用栏颜色**/
+  --color-background-card: #FFFFFF; /**卡片颜色**/
 
-  --color-border: rgba(0, 0, 0, .12);
+  --color-border: rgba(0, 0, 0, .12); /**边框颜色**/
 
-  --color-icon: rgba(0, 0, 0, .54);
+  --color-icon: rgba(0, 0, 0, .54); /**图标颜色**/
 
-  --color-text: rgba(0, 0, 0, .87);
-  --color-text-secondary: rgba(0, 0, 0, .54);
-  --color-text-disabled: rgba(0, 0, 0, .38);
+  --color-text: rgba(0, 0, 0, .87); /**文本颜色**/
+  --color-text-secondary: rgba(0, 0, 0, .54); /**次要文本颜色**/
+  --color-text-disabled: rgba(0, 0, 0, .38); /**禁用文本颜色颜色**/
 
-  --color-ripple: rgba(0, 0, 0, .12);
+  --color-ripple: rgba(0, 0, 0, .12); /**波纹颜色**/
 }
 ```
 
