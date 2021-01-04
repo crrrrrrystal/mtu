@@ -76,6 +76,6 @@ m-menu::part(body){
 m-toast,
 m-dialog,
 m-tooltip::part(root),
-m-datepicker::part(root){
+m-date-picker::part(root){
   z-index: 3;
 }

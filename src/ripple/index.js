@@ -29,16 +29,17 @@ const setup = (shadow, node) => {
     !isAnime ? remove() : animeCall = remove
     isDown = false
   }
-  const isTouch = window.ontouchstart === null
+
   node.addEventListener('mousedown', e => {
-    if (e.button === 2 || isTouch) return
+    if (e.button === 2) return
     down(e.pageX, e.pageY)
   })
-  node.addEventListener('mouseup', () => !isTouch && up())
-  node.addEventListener('mouseout', () => !isTouch && up())
+  node.addEventListener('mouseup', up)
+  node.addEventListener('mouseout', up)
   node.addEventListener('touchstart', e => {
     const t = e.touches[0]
     down(t.pageX, t.pageY)
+    e.preventDefault()
   })
   node.addEventListener('touchend', up)
   node.addEventListener('touchcancel', up)

@@ -76,9 +76,6 @@ m-menu::part(body){
 m-toast,
 m-dialog,
 m-tooltip::part(root),
-m-datepicker::part(root){
+m-date-picker::part(root){
   z-index: 3;
-}@font-face {
-  font-family: 'Material Icons';
-  src: url(./Material_Icons.woff2) format('woff2');
 }

@@ -1,4 +1,4 @@
-const define = (name, { template = '', props = [], setup = () => { } }) => {
+export const define = (name, { template = '', props = [], setup = () => { } }) => {
   const list = new Map()
   window.customElements.define('m-' + name, class extends HTMLElement {
     static observedAttributes = props
@@ -11,8 +11,7 @@ const define = (name, { template = '', props = [], setup = () => { } }) => {
       for (const key in out) {
         if (['onConnected', 'onDisconnected', 'onAdopted'].indexOf(key) !== -1) continue
         const item = out[key]
-
-        //处理属性
+        //attr
         const info = { value: item, type: typeof item }
         const toType = v => {
           if (info.type === 'string') return String(v)
@@ -79,14 +78,12 @@ const define = (name, { template = '', props = [], setup = () => { } }) => {
   return window.Mtu || (window.Mtu = {})
 }
 
-const animationEnd = (view, call) => {
+export const animationEnd = (view, call) => {
   view.addEventListener('animationend', call, { once: true })
   view.addEventListener('animationcancel', call, { once: true })
 }
 
-const transitionEnd = (view, call) => {
+export const transitionEnd = (view, call) => {
   view.addEventListener('transitionend', call, { once: true })
   view.addEventListener('transitioncancel', call, { once: true })
 }
-
-export { define, animationEnd, transitionEnd }

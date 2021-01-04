@@ -4,7 +4,7 @@
 $ npm i mtu
 ```
 
-响应式跨框架的UI组件库，不依赖任何库，基于 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 封装，兼容`React`、`Vue`等前端框架，Mtu 参考了 Google [Material Design](https://material-io.cn/) 设计规范，并针对移动端做了优化，适用于需要同时兼容移动端的Web项目，门户网站、后台管理系统等。
+响应式跨框架的UI组件库，不依赖任何库，基于 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 封装，兼容`React`、`Vue`等前端框架，当然也可以在`electron`中引入，Mtu 参考了 Google [Material Design](https://material-io.cn/) 设计规范，并针对移动端做了优化，适用于需要同时兼容移动端的Web项目，门户网站、后台管理系统等。
 
 ## 引入 Mtu
 
@@ -58,7 +58,7 @@ import 'mtu/style'
 如果你在 `Vue2` 中安装使用，你可能需要在 `main.js` 屏蔽 `Vue` 组件未定义的提示。
 
 ```js
-Vue.config.ignoredElements = [/^s-/]
+Vue.config.ignoredElements = [/^m-/]
 ```
 
 如果您使用 `Vite` (Vue3) ，您可能需要在项目根目录创建 `vite.config.js` 来屏蔽组件定义的提示。

@@ -17,11 +17,10 @@ const setup = (shadow, node) => {
   }
 
   let inter = null
-  let isConnect = false
   const clear = () => clearInterval(inter)
 
   const start = () => {
-    if (!isConnect || !node.autoplay) return
+    if (!node.isConnected || !node.autoplay) return
     clear()
     inter = setInterval(() => node.select++, node.interval)
   }
@@ -46,14 +45,8 @@ const setup = (shadow, node) => {
   slot.addEventListener('slotchange', update)
 
   return {
-    onConnected() {
-      isConnect = true
-      start()
-    },
-    onDisconnected() {
-      isConnect = false
-      clear()
-    },
+    onConnected: start,
+    onDisconnected: clear,
     select: {
       get: 0,
       set: change,
