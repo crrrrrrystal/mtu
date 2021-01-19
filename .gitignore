@@ -1,6 +1,7 @@
 .git
 .gitignore
 node_modules/
+rollup.js
 rollup.config.js
 package-lock.json
 dev.js

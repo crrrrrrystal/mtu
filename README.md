@@ -4,13 +4,28 @@
 $ npm i mtu
 ```
 
-响应式跨框架的UI组件库，不依赖任何库，基于 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 封装，兼容`React`、`Vue`等前端框架，当然也可以在`electron`中引入，Mtu 参考了 Google [Material Design](https://material-io.cn/) 设计规范，并针对移动端做了优化，适用于需要同时兼容移动端的Web项目，门户网站、后台管理系统等。
+> 完全响应式跨框架的UI组件库，基于 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 封装，兼容 `React` 、 `Vue` 等前端框架，或者在 `electron` 中引入，设计规范参考了 Google  [Material Design](https://material-io.cn/)，并针对移动端做了优化，适用于需要同时兼容移动端的Web项目，门户网站、后台管理系统等。
+
+### 优势
+
+- [x] 响应式；自适应不同分辨率设备，并在窗口或组件发生变化时更新样式(横屏竖屏)。
+- [x] 跨框架；兼容所有框架，无论是原生开发还是任何前端框架均可引入使用。
+- [x] 零依赖；不依赖任何第三方库。
+- [x] 按需引入；使用 `webpack` 或 `vite`，你可以按需引入组件，减少体积。
+- [x] 本地化；完全中文的开发文档支持。
+- [x] 无门槛；基于 `Web Components` 封装，如同常规的 `div`、`select` 的布局使用。
+
+### 劣势
+
+- [ ] 不兼容`IE`；使用了较多 `HTML5` 规范的浏览器API来提升渲染性能，无法通过任何兼容库实现对 `IE` 任何系列的兼容。
 
 ## 引入 Mtu
 
 完全引入：
 ```js
 import 'mtu'
+//引入默认样式
+import 'mtu/styles/default.css'
 ```
 按需引入：
 ```js
@@ -22,13 +37,9 @@ import 'mtu/radio'
 
 注意：按需引入时，请务必引入样式。
 
-```js
-import 'mtu/style'
-```
+> 你可以在 `<body>` 添加属性 `theme="dark"` 来使用夜间主题。
 
-你可以在 `<body>` 添加属性 `theme="dark"` 来使用夜间主题。
-
-## CDN 使用
+## CDN
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mtu/dist/mtu.min.css">
@@ -55,13 +66,13 @@ import 'mtu/style'
 
 ## 常见问题
 
-如果你在 `Vue2` 中安装使用，你可能需要在 `main.js` 屏蔽 `Vue` 组件未定义的提示。
+> 如果你在 `Vue2` 中安装使用，你可能需要在 `main.js` 屏蔽 `Vue` 组件未定义的提示。
 
 ```js
 Vue.config.ignoredElements = [/^m-/]
 ```
 
-如果您使用 `Vite` (Vue3) ，您可能需要在项目根目录创建 `vite.config.js` 来屏蔽组件定义的提示。
+> 如果您使用 `Vite` (Vue3) ，您可能需要在项目根目录创建 `vite.config.js` 来屏蔽组件定义的提示。
 
 ```js
 module.exports = {
@@ -71,7 +82,7 @@ module.exports = {
 }
 ```
 
-在 `React` 中组件使用 `className` 属性会变得无效，你需要使用 `class` 替代，常规事件如 `onChange` 也不会触发，你可能需要 `ref.addEventListener('change')` 替代。
+> 在 `React` 中组件使用 `className` 属性会变得无效，你需要使用 `class` 替代，常规事件如 `onChange` 也不会触发，你可能需要 `ref.addEventListener('change')` 替代。
 
 ## 使用组件
 
@@ -103,7 +114,7 @@ body {
 }
 ```
 
-这些变量挂载在 `<body>` 下，大多数组件都使用了这些值，也正因为如此，重新定义这些变量可以自定义所有组件配色。(夜间模式也是基于它实现的)
+> 这些变量挂载在 `<body>` 下，大多数组件都使用了这些值，也正因为如此，重新定义这些变量可以自定义所有组件配色。(夜间模式也是基于它实现的)
 
 甚至你可以定义单个组件的配色。
 
@@ -112,6 +123,10 @@ m-button{
   --color-accent: 25,25,25;
 }
 ```
+
+## 动态调用
+
+> 大多数时候动态调用组件，比布局的方式要更方便，如 `dialog` 对话框，我们封装了一些组件的动态调用方式，你可以通过 `window.Mtu` 访问这些方法。
 
 ## 开发文档
 

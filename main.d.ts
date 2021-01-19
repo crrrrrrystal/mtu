@@ -1,7 +1,8 @@
 declare interface Window {
   Mtu: {
     toast(msg: string): void
-    dialog(title: string, option?: {
+    dialog(option?: {
+      title?: string
       message?: string
       positive?: string
       onPositive?(): void

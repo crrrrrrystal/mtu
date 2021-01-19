@@ -10,8 +10,8 @@ html{
 }
 
 body {
-  --color-primary: 63,81,181;
-  --color-accent: 255,61,0;
+  --color-primary: 45,140,240;
+  --color-accent: 45,140,240;
 
   --color-background: #FAFAFA;
   --color-background-bar: #F5F5F5;
@@ -63,6 +63,11 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+::selection{
+  background: rgba(var(--color-accent));
+  color: #fff;
+}
+
 m-appbar{
   z-index:1;
 }
@@ -78,4 +83,7 @@ m-dialog,
 m-tooltip::part(root),
 m-date-picker::part(root){
   z-index: 3;
+}@font-face {
+  font-family: 'Material Icons';
+  src: url(./Material_Icons.woff2) format('woff2');
 }

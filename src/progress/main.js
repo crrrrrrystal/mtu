@@ -21,7 +21,7 @@ const setup = (shadow, node) => {
       set: v => update(v, node.value),
       sync: false
     },
-    mode: ['none', 'line']
+    mode: ['linear', 'circle']
   }
 }
 
