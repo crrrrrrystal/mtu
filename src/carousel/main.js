@@ -38,7 +38,7 @@ const setup = (shadow, node) => {
       i++
     }
     bar.appendChild(fragment)
-    bar.children[0].classList.add('checked')
+    bar.children[0] && bar.children[0].classList.add('checked')
     start()
   }
 
