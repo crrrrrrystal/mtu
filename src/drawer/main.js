@@ -15,11 +15,11 @@ const setup = (shadow, node) => {
 
   const touchStart = e => {
     if (info !== null) return
-    root.classList.add('noAnime')
     const x = e.touches[0].pageX
     const width = start.offsetWidth
     const vX = x - node.offsetLeft
     if (!node.mobile_start && vX > 24 || node.mobile_start && vX > width) return
+    root.classList.add('noAnime')
     info = { width, x: x, y: e.touches[0].pageY, time: new Date().getTime() }
   }
 
@@ -45,9 +45,11 @@ const setup = (shadow, node) => {
   const touchEnd = e => {
     root.classList.remove('noAnime')
     if (info === null || !info.state) return
+    const vx = e.changedTouches[0].pageX
+    const vy = e.changedTouches[0].pageY
 
     const time = new Date().getTime() - info.time
-    const x = e.changedTouches[0].pageX - info.x
+    const x = vx - info.x
     let v = node.mobile_start
 
     if (!node.mobile_start) {
@@ -55,7 +57,7 @@ const setup = (shadow, node) => {
     } else {
       if ((time < 300 && x < -40) || (time > 300 && x < -(info.width / 2))) v = false
     }
-
+    if (Math.abs(vx - info.x) < Math.abs(vy - info.y)) v = node.mobile_start
     mask.removeAttribute('style')
     start.removeAttribute('style')
     startShadow.removeAttribute('style')
