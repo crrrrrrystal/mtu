@@ -1,6 +1,6 @@
 import { define } from '../../core.js'
 
-const template = `<style>:host{display:flex;height:196px;margin:24px;background:#eee;overflow:hidden;border-radius:2px;position:relative;justify-content:center;align-items:center}.root{display:flex;height:100%;width:100%;flex-shrink:0;transform:translateX(0%);transition:transform .4s}.bar{position:absolute;bottom:16px;display:flex}.bar>div{width:8px;height:8px;background:rgba(255,255,255,.4);border-radius:50%;margin:0 4px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.14)}.bar>div.checked{background:rgba(var(--color-accent))}</style><div class="root" part="root"><slot></slot></div><div class="bar" part="bar"></div>`
+const template = `<style>:host{display:flex;height:196px;background:#eee;overflow:hidden;border-radius:2px;position:relative;justify-content:center;align-items:center}.root{display:flex;height:100%;width:100%;flex-shrink:0;transform:translateX(0%);transition:transform .4s}.bar{position:absolute;bottom:16px;display:flex}.bar>div{width:8px;height:8px;background:rgba(255,255,255,.4);border-radius:50%;margin:0 4px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.14)}.bar>div.checked{background:rgba(var(--color-accent))}</style><div class="root" part="root"><slot></slot></div><div class="bar" part="bar"></div>`
 const props = ['select', 'autoplay', 'interval']
 
 const setup = (shadow, node) => {
