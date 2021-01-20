@@ -7,6 +7,7 @@
 
 html{
   font-size: 16px;
+  height: 100%;
 }
 
 body {
@@ -66,6 +67,10 @@ body {
 ::selection{
   background: rgba(var(--color-accent));
   color: #fff;
+}
+
+:not(:defined) {
+  display: none;
 }
 
 m-appbar{

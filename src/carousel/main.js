@@ -65,4 +65,4 @@ const setup = (shadow, node) => {
   }
 }
 
-define('swiper', { template, props, setup })
+define('carousel', { template, props, setup })
