@@ -23,8 +23,8 @@ const setup = (shadow, node) => {
     updateHeight()
   })
 
-  updateHeight()
   return {
+    onConnected: updateHeight,
     value: {
       get: () => value,
       set: v => {

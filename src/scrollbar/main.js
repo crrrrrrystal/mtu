@@ -29,7 +29,7 @@ const setup = (shadow, node) => {
   root.addEventListener('scroll', () => {
     node.dispatchEvent(new Event('scroll'))
     scroll.classList.add('is')
-    updateTrack()
+    window.requestAnimationFrame(updateTrack)
     clearTimeout(is)
     is = setTimeout(() => scroll.classList.remove('is'), 2000)
   })
@@ -57,7 +57,7 @@ const setup = (shadow, node) => {
       get: () => track.offsetWidth,
       sync: false
     },
-    mode: ['vert', 'horiz']
+    mode: ['vert', 'horiz', 'auto']
   }
 }
 

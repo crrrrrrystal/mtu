@@ -38,12 +38,10 @@ const setup = (shadow, node) => {
     positive: {
       get: () => positive.innerText,
       set: v => positive.innerText = v,
-      sync: false
     },
     negative: {
       get: () => negative.innerText,
       set: v => negative.innerText = v,
-      sync: false
     }
   }
 }
