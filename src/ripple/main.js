@@ -1,4 +1,4 @@
-import { define, animationEnd, bindTap } from '../../core.js'
+import { define, animationEnd } from '../../core.js'
 
 const template = `<style>:host{display:block;user-select:none;position:relative}:host::before{content:'';height:100%;width:100%;position:absolute;opacity:0;transition:opacity .2s;will-change:opacity;border-radius:inherit;pointer-events:none;background:var(--color-ripple);left:0;top:0}@keyframes anime{0%{transform:translate(var(--x),var(--y)) scale(.2);opacity:1}100%{transform:translate(0px,0px) scale(1);opacity:1}}.ripple{left:0;top:0;width:100%;height:100%;position:absolute;pointer-events:none;display:flex;justify-content:center;align-items:center;overflow:hidden}.ripple>.anime{background:var(--color-ripple);border-radius:50%;flex-shrink:0;opacity:0;will-change:transform}@media(min-width:720px){:host(:hover)::before{opacity:.24}}</style><slot></slot><div class="ripple" part="ripple"><div class="anime" part="anime"></div></div>`
 
@@ -43,7 +43,6 @@ const setup = (shadow, node) => {
   })
   node.addEventListener('touchend', up)
   node.addEventListener('touchcancel', up)
-  bindTap(node)
 }
 
 define('ripple', { template, setup })

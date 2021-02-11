@@ -6,10 +6,10 @@ const props = ['checked', 'disabled', 'value', 'name']
 
 const setup = (shadow, node) => {
   node.addEventListener('click', () => {
+    node.checked = !node.checked
     const ev = new Event('change')
     ev.checked = node.checked
     node.dispatchEvent(ev, { cancelable: true })
-    node.checked = !node.checked
   })
   return {
     checked: false,

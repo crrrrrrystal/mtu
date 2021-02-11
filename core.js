@@ -104,11 +104,3 @@ export const transitionEnd = (view, call) => {
   view.addEventListener('transitionend', call, { once: true })
   view.addEventListener('transitioncancel', call, { once: true })
 }
-
-export const bindTap = view => {
-  view.addEventListener('touchend', e => {
-    if (e.changedTouches.length > 1 || !e.cancelable) return
-    view.click()
-    e.preventDefault()
-  })
-}
