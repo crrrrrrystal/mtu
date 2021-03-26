@@ -22,7 +22,7 @@ $ npm i mtu
 ```js
 import 'mtu'
 //引入默认样式
-import 'mtu/styles/default.css'
+import 'mtu/style'
 ```
 按需引入：
 ```js
@@ -34,7 +34,7 @@ import 'mtu/radio'
 
 注意：按需引入时，请务必引入样式。
 
-> 你可以在 `<body>` 添加属性 `theme="dark"` 来使用夜间主题。
+> 你可以在 `<body>` 添加属性 `theme="dark"` 来使用夜间主题，或者 `theme="auto"` 使用自动主题(根据操作系统主题切换夜间模式)。
 
 ## CDN
 
