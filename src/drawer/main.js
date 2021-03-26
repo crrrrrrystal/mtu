@@ -1,6 +1,7 @@
 import { define } from '../../core.js'
 
-const template = `<style>:host{display:block;height:100%}.root{display:flex;position:relative;overflow:hidden;height:100%}.content{width:calc(100% - 260px);flex-shrink:0;transition:width .2s}::slotted(*){height:100%;display:block}.mask{position:absolute;width:100%;height:100%;left:0;top:0;pointer-events:none;display:none;background:rgba(0,0,0,.4);opacity:0}.start{order:-1;background:var(--color-background-card);flex-shrink:0;position:relative;width:260px}.start>.shadow{box-shadow:0 8px 10px -5px rgba(0,0,0,.2),0 16px 24px 2px rgba(0,0,0,.14),0 6px 30px 5px rgba(0,0,0,.12);pointer-events:none;position:absolute;width:100%;height:100%;left:0;top:0;opacity:0}.start>.left{position:relative;height:100%}@media(min-width:720px){.start{transition:width .2s;will-change:width;overflow:hidden;white-space:nowrap}:host([start=false]) .start{width:0}:host([start=false]) .content{width:100%}}@media(max-width:720px){.mask{transition:opacity .2s;display:block;will-change:opacity}.content{width:100%}.start{position:absolute;top:0;left:0;height:100%;transform:translateX(-100%);will-change:transform}.start>.left{pointer-events:none}.root:not(.noAnime) .start{transition:transform .2s}.start>.shadow{will-change:opacity}.root:not(.noAnime) .start>.shadow{transition:opacity .2s}:host([mobile_start=true]) .start{transform:translateX(0%)}:host([mobile_start=true]) .mask{opacity:1;pointer-events:auto}:host([mobile_start=true]) .start>.shadow{opacity:1}:host([mobile_start=true]) .start>.left{pointer-events:auto}}</style><div class="root"><div class="content" part="content"><slot></slot></div><div class="mask" part="mask"></div><div class="start" part="start"><div class="shadow"></div><div class="left"><slot name="start"></slot></div></div></div>`
+const template = `<style>:host{display:block;height:100%;--drawer-start-width:260px}.root{display:flex;position:relative;height:100%;justify-content:flex-end;overflow:hidden}.content{width:calc(100% - var(--drawer-start-width));flex-shrink:0;transition:width .2s}::slotted(*){height:100%;display:block}.mask{position:absolute;width:100%;height:100%;left:0;top:0;pointer-events:none;display:none;background:rgba(0,0,0,.4);opacity:0}.start{background:var(--color-background-card);flex-shrink:0;position:absolute;width:var(--drawer-start-width);left:0;height:100%}.start>.shadow{box-shadow:0 8px 10px -5px rgba(0,0,0,.2),0 16px 24px 2px rgba(0,0,0,.14),0 6px 30px 5px rgba(0,0,0,.12);pointer-events:none;position:absolute;width:100%;height:100%;left:0;top:0;opacity:0}.start>.left{position:relative;height:100%}@media(min-width:720px){.start{transition:width .2s;will-change:width;overflow:hidden;white-space:nowrap}:host([start=false]) .start{width:0}:host([start=false]) .content{width:100%}}@media(max-width:720px){.mask{transition:opacity .2s;display:block;will-change:opacity}.content{width:100%}.start{position:absolute;top:0;left:0;height:100%;transform:translateX(-100%);will-change:transform}.start>.left{pointer-events:none}.noAnime .start{pointer-events:none}.root:not(.noAnime) .start{transition:transform .2s}.start>.shadow{will-change:opacity}.root:not(.noAnime) .start>.shadow{transition:opacity .2s}:host([mobile_start=true]) .start{transform:translateX(0%)}:host([mobile_start=true]) .mask{opacity:1;pointer-events:auto}:host([mobile_start=true]) .start>.shadow{opacity:1}:host([mobile_start=true]) .start>.left{pointer-events:auto}}</style><div class="root"><div class="content" part="content"><slot></slot></div><div class="mask" part="mask"></div><div class="start" part="start"><div class="shadow"></div><div class="left"><slot name="start"></slot></div></div></div>`
+
 const props = ['start', 'mobile_start']
 
 const setup = (shadow, node) => {
@@ -8,63 +9,58 @@ const setup = (shadow, node) => {
   const start = shadow.querySelector('.start')
   const startShadow = shadow.querySelector('.start>.shadow')
   const mask = shadow.querySelector('.mask')
-
   mask.addEventListener('click', () => node.toggle())
+
   let info = null
 
-  const touchStart = e => {
-    if (info !== null) return
-    const x = e.touches[0].pageX
-    const width = start.offsetWidth
-    const vX = x - node.offsetLeft
-    if (!node.mobile_start && vX > 24 || node.mobile_start && vX > width) return
-    root.classList.add('noAnime')
-    info = { width, x: x, y: e.touches[0].pageY, time: new Date().getTime() }
+  //记录首次
+  const firstMove = (x, y) => {
+    if ((node.mobile_start && x > start.offsetWidth) || (!node.mobile_start && x > 24)) return
+    info = { state: 0, width: start.offsetWidth, x, y, timestamp: Date.now() }
   }
 
   const touchMove = e => {
-    if (!e.cancelable) return
-    touchStart(e)
-    if (info === null) return
-    const x = e.touches[0].pageX
-    const vX = x - info.x
-    if (Math.abs(vX) < Math.abs(e.touches[0].pageY - info.y) && !info.state) return
-
-    let move = node.mobile_start ? vX : vX - info.width
+    const { pageX, pageY } = e.changedTouches[0]
+    const x = pageX - node.offsetLeft
+    const y = pageY - node.offsetTop
+    if (info === null) return firstMove(x, y)
+    if (info.state === 0) {
+      const ov = Math.abs(x - info.x) > Math.abs(y - info.y)
+      info.state = ov ? 1 : null
+      if (ov) root.classList.add('noAnime')
+    }
+    if (info.state !== 1) return
+    const xx = x - info.x
+    let move = node.mobile_start ? xx : -info.width + xx
     if (move > 0) move = 0
     if (move < -info.width) move = -info.width
     start.style.transform = 'translateX(' + move + 'px)'
-
     const opacity = (move + info.width) / info.width
     startShadow.style.opacity = opacity
     mask.style.opacity = opacity
-    info.state = true
   }
 
   const touchEnd = e => {
+    const infos = info
+    info = null
     root.classList.remove('noAnime')
-    if (info === null || !info.state) return
-    const vx = e.changedTouches[0].pageX
-    const vy = e.changedTouches[0].pageY
-
-    const time = new Date().getTime() - info.time
-    const x = vx - info.x
+    if (infos === null || infos.state !== 1) return
+    const { pageX } = e.changedTouches[0]
+    const xx = (pageX - node.offsetLeft) - infos.x
+    const time = Date.now() - infos.timestamp
     let v = node.mobile_start
-
     if (!node.mobile_start) {
-      if ((time < 300 && x > 40) || (time > 300 && x > (info.width / 2))) v = true
+      if ((time < 300 && xx > 40) || (time > 300 && xx > (infos.width / 2))) v = true
     } else {
-      if ((time < 300 && x < -40) || (time > 300 && x < -(info.width / 2))) v = false
+      if ((time < 300 && xx < -40) || (time > 300 && xx < -(infos.width / 2))) v = false
     }
-    if (Math.abs(vx - info.x) < Math.abs(vy - info.y)) v = node.mobile_start
     mask.removeAttribute('style')
     start.removeAttribute('style')
     startShadow.removeAttribute('style')
     node.mobile_start = v
-    info = null
   }
 
-  node.addEventListener('touchmove', touchMove)
+  node.addEventListener('touchmove', touchMove, { passive: true })
   node.addEventListener('touchend', touchEnd)
   node.addEventListener('touchcancel', touchEnd)
   node.toggle = () => {

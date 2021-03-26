@@ -2,7 +2,7 @@ import { define } from '../../core.js'
 import '../ripple/main.js'
 import '../tooltip/main.js'
 
-const template = `<style>:host{display:block;width:var(--menu-item-width,auto);height:var(--menu-item-height,48px);margin:var(--menu-item-margin,0);position:relative}.root{display:flex;height:100%;align-items:center;cursor:pointer;padding:var(--menu-item-padding,0 16px);overflow:hidden;border-radius:var(--menu-item-border-radius,0)}.title{flex-grow:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tooltip{position:absolute;width:100%;height:100%;left:0;top:0;pointer-events:var(--menu-item-tooltip-pointer-events,none)}::slotted([slot=start]){margin-right:16px;flex-shrink:0}::slotted([slot=end]){margin:0 -8px 0 16px}</style><m-ripple class="root" part="root" title=""><m-tooltip class="tooltip"></m-tooltip><slot name="start"></slot><div class="title"></div><slot name="end"></slot></m-ripple>`
+const template = `<style>:host{display:block;width:var(--menu-item-width,auto);height:var(--menu-item-height,48px);margin:var(--menu-item-margin,0);position:relative}.root{display:flex;height:100%;align-items:center;cursor:pointer;padding:var(--menu-item-padding,0 16px);overflow:hidden;border-radius:var(--menu-item-border-radius,0)}.title{flex-grow:1;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tooltip{position:absolute;width:100%;height:100%;left:0;top:0;pointer-events:var(--menu-item-tooltip-pointer-events,none)}::slotted([slot=start]){margin:var(--menu-item-start-marign,0 16px 0 0);flex-shrink:0;display:var(--menu-item-start-display,block)}::slotted([slot=end]){margin:0 -8px 0 16px}</style><m-ripple class="root" part="root" title=""><m-tooltip class="tooltip"></m-tooltip><slot name="start"></slot><div class="title"></div><slot name="end"></slot></m-ripple>`
 const props = ['title']
 
 const setup = (shadow, node) => {
@@ -17,9 +17,8 @@ const setup = (shadow, node) => {
       get: () => title.innerText,
       set: v => {
         title.innerText = v
-        tooltip.title = v
-      },
-      sync: false
+        tooltip.setAttribute('text', v)
+      }
     }
   }
 }

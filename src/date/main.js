@@ -1,122 +1,135 @@
 import { define } from '../../core.js'
+import { animationEnd } from '../../util.js'
 import '../ripple/main.js'
+import '../scrollbar/main.js'
 
-const template = `<style>:host{display:inline-block;vertical-align:middle;border-radius:2px;background:var(--color-background-card);user-select:none;width:100%;max-width:360px;box-shadow:0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12)}.head{background:rgba(var(--color-primary));color:#fff;padding:16px 24px;border-radius:2px 2px 0 0}.head>.title{color:rgba(255,255,255,0.7);font-size:1.125rem;cursor:pointer;display:inline-block;padding:4px;border-radius:2px;overflow:hidden;--color-ripple:rgba(255,255,255,.4)}.head>.subtitle{color:#fff;font-size:1.5rem;margin-top:4px;letter-spacing:1px}.switch{display:flex;align-items:center;height:56px}.switch>.button{width:40px;height:40px;cursor:pointer;display:flex;justify-content:center;align-items:center;border-radius:50%;margin:0 8px;overflow:hidden}.switch>.button>svg{width:24px;height:24px;fill:var(--color-icon)}.switch>.text{flex-grow:1}.switch>.text>m-ripple{overflow:hidden;height:36px;display:flex;justify-content:center;align-items:center;font-size:1rem;padding:0 16px;border-radius:2px;cursor:pointer}.days{display:flex;margin:0;padding:0;height:36px;align-items:center;padding:0 16px}.days>li{list-style:none;flex-grow:1;display:flex;justify-content:center;color:var(--color-text-secondary)}.list{display:flex;flex-wrap:wrap;padding:0 16px;margin:12px 0;counter-reset:day}.list>li{list-style:none;width:calc(100% / 7);display:flex;justify-content:center;align-items:center}.list>li.checked>m-ripple{background:rgba(var(--color-accent));color:#fff;--color-ripple:rgba(255,2552,255,.4)}.list>li>m-ripple{width:36px;overflow:hidden;height:36px;cursor:pointer;display:flex;justify-content:center;align-items:center;border-radius:50%;margin:2px 0}.list>li>m-ripple::after{counter-increment:day;content:counter(day)}.list>li.hide{display:none}.month-list{margin:0;padding:0 0 8px 0;display:none;flex-wrap:wrap}.month-list>li{list-style:none;width:calc(100% / 3);padding:8px 16px;box-sizing:border-box}.month-list>li.checked>m-ripple{background:rgba(var(--color-accent));color:#fff;--color-ripple:rgba(255,2552,255,.4)}.month-list>li>m-ripple{overflow:hidden;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:2px}.year-list{display:none;margin:0;padding:0;overflow-y:scroll;max-height:420px;scrollbar-width:none;counter-reset:year}.year-list::-webkit-scrollbar{display:none}.year-list>li{list-style:none}.year-list>li.checked>m-ripple{color:rgba(var(--color-accent));font-size:1.125rem}.year-list>li>m-ripple::after{counter-increment:year;content:counter(year)}.year-list>li>m-ripple{display:flex;font-size:1rem;justify-content:center;align-items:center;height:40px;cursor:pointer}.toggle-month .list,.toggle-month .days,.toggle-month .year-list,.toggle-year .switch,.toggle-year .days,.toggle-year .list{display:none}.toggle-month:not(.toggle-year) .month-list{display:flex}.toggle-year .year-list{display:block}</style><slot></slot><div class="root" part="root"><div class="head"><m-ripple class="title"></m-ripple><div class="subtitle"></div></div><div class="switch"><m-ripple class="button left"><svg viewBox="0 0 1024 1024"><path d="M657.493333 707.413333L462.08 512l195.413333-195.84L597.333333 256l-256 256 256 256 60.16-60.586667z"></path></svg></m-ripple><div class="text"><m-ripple></m-ripple></div><m-ripple class="button right"><svg viewBox="0 0 1024 1024"><path d="M366.506667 707.413333L561.92 512 366.506667 316.16 426.666667 256l256 256-256 256-60.16-60.586667z"></path></svg></m-ripple></div><ul class="days"><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul><ul class="list"><li class="seat" style="width: 0;"></li></ul><ul class="month-list"><li><m-ripple>一月</m-ripple></li><li><m-ripple>二月</m-ripple></li><li><m-ripple>三月</m-ripple></li><li><m-ripple>四月</m-ripple></li><li><m-ripple>五月</m-ripple></li><li><m-ripple>六月</m-ripple></li><li><m-ripple>七月</m-ripple></li><li><m-ripple>八月</m-ripple></li><li><m-ripple>九月</m-ripple></li><li><m-ripple>十月</m-ripple></li><li><m-ripple>十一月</m-ripple></li><li><m-ripple>十二月</m-ripple></li></ul><ul class="year-list"></ul></div>`
-const props = ['value']
-
-const createElement = (length, call = () => { }) => {
-  const fragment = document.createDocumentFragment()
-  for (let i = 1; i <= length; i++) {
-    const view = document.createElement('li')
-    const ripple = document.createElement('m-ripple')
-    ripple.addEventListener('click', () => call(i))
-    view.appendChild(ripple)
-    fragment.appendChild(view)
+class Dated extends Date {
+  static fill(v) {
+    return String(v).padStart(2, '0')
   }
-  return fragment
+  constructor(...args) {
+    super(...args)
+  }
+  get Y() {
+    return this.getFullYear()
+  }
+  get m() {
+    return this.getMonth()
+  }
+  get d() {
+    return this.getDate()
+  }
+  get timestamp() {
+    return this.getTime()
+  }
+  format() {
+    return `${Dated.fill(this.Y)}-${Dated.fill(this.m + 1)}-${Dated.fill(this.d)}`
+  }
+  setFullYear(...args) {
+    super.setFullYear(...args)
+    return this
+  }
+  setMonth(...args) {
+    super.setMonth(...args)
+    return this
+  }
+  setDate(...args) {
+    super.setDate(...args)
+    return this
+  }
 }
 
-const fill = v => {
-  v = String(v)
-  return v.length == 1 ? '0' + v : v
-}
+const template = `<style>:host{display:inline-block;vertical-align:middle;border-radius:2px;background:var(--color-background-card);user-select:none;width:100%;max-width:360px;box-shadow:0 2px 1px -1px rgb(0 0 0 / 20%),0 1px 1px 0 rgb(0 0 0 / 14%),0 1px 3px 0 rgb(0 0 0 / 12%)}.head{background:rgba(var(--color-primary));color:#fff;padding:16px 24px;border-radius:2px 2px 0 0;display:flex;flex-direction:column;line-height:1;min-width:196px;box-sizing:border-box}.head>.title{overflow:hidden;width:fit-content;--color-ripple:rgba(255,255,255,.4);color:rgba(255,255,255,0.7);font-size:1.125rem;cursor:pointer;display:inline-flex;align-items:center;padding:0 4px;border-radius:2px;height:32px}.head>.subtitle{color:#fff;font-size:1.5rem;margin-top:8px;letter-spacing:1px;overflow:hidden}.body{overflow:hidden}.switch{display:flex;align-items:center;height:56px}.switch>.but{display:flex;flex-shrink:0;border-radius:50%;height:40px;width:40px;cursor:pointer;align-items:center;justify-content:center;overflow:hidden;margin:0 8px}.switch>.but>svg{width:24px;height:24px;fill:var(--color-icon)}.switch>.text{flex-grow:1;overflow:hidden}.switch>.text>.but{display:flex;justify-content:center;align-items:center;cursor:pointer;height:36px;border-radius:2px;overflow:hidden;font-size:1rem;padding:0 16px}.day{display:flex;height:36px;align-items:center;padding:0 16px}.day>div{flex-grow:1;display:flex;justify-content:center;color:var(--color-text-secondary)}.days{display:flex;flex-wrap:wrap;padding:0 16px;margin:12px 0;counter-reset:day 0}.days>div{width:calc(100% / 7);display:flex;justify-content:center;align-items:center}.days .item{width:36px;overflow:hidden;height:36px;cursor:pointer;display:flex;justify-content:center;align-items:center;border-radius:50%;margin:2px 0}.days .item::after{content:counter(day);counter-increment:day}.days .checked{background:rgba(var(--color-accent));color:#fff;pointer-events:none}.days[date="28"]>div:nth-child(n+30),.days[date="29"]>div:nth-child(n+31),.days[date="30"]>div:nth-child(n+32){display:none}@keyframes left{0%{transform:translateX(-100%)}100%{transform:translateX(0%)}}@keyframes right{0%{transform:translateX(100%)}100%{transform:translateX(0%)}}@keyframes top{0%{transform:translateY(-100%)}100%{transform:translateY(0%)}}@keyframes bottom{0%{transform:translateY(100%)}100%{transform:translateY(0%)}}.left:not(.show-month) .switch>.text>.but,.left .days{animation:left .2s}.right:not(.show-month) .switch>.text>.but,.right .days{animation:right .2s}.head>.subtitle>.top{animation:top .2s;text-shadow:0 1.5rem #fff}.head>.subtitle>.bottom{animation:bottom .2s;text-shadow:0 -1.5rem #fff}.month{display:none;padding:0 0 8px 0;flex-wrap:wrap}.show-month .month{display:flex}.show-month .day,.show-month .days{display:none}.month>div{width:calc(100% / 3);padding:8px 16px;box-sizing:border-box}.month .item{overflow:hidden;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:2px}.month .item::after{content:'月'}.month .checked>.item{background:rgba(var(--color-accent));pointer-events:none;color:#fff}.year{max-height:420px;display:none;width:100%}.show-year .year{display:block}.show-year .body{display:none}.year>div{height:40px}.year>div>.item{display:flex;align-items:center;height:100%;justify-content:center;font-size:1rem;cursor:pointer}.year>div>.item::after{counter-increment:year;content:counter(year)}.year>.checked>.item{pointer-events:none;font-size:1.125rem;color:rgba(var(--color-accent))}</style><div class="root" part="root"><div class="head" part="head"><m-ripple class="title"></m-ripple><div class="subtitle"><div></div></div></div><div class="body" part="body"><div class="switch"><m-ripple class="but"><svg viewBox="0 0 1024 1024"><path d="M657.493333 707.413333L462.08 512l195.413333-195.84L597.333333 256l-256 256 256 256 60.16-60.586667z"></path></svg></m-ripple><div class="text"><m-ripple class="but"></m-ripple></div><m-ripple class="but"><svg viewBox="0 0 1024 1024"><path d="M366.506667 707.413333L561.92 512 366.506667 316.16 426.666667 256l256 256-256 256-60.16-60.586667z"></path></svg></m-ripple></div><div class="day"><div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div></div><div class="days"><div></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div></div><div class="month"><div><m-ripple class="item">一</m-ripple></div><div><m-ripple class="item">二</m-ripple></div><div><m-ripple class="item">三</m-ripple></div><div><m-ripple class="item">四</m-ripple></div><div><m-ripple class="item">五</m-ripple></div><div><m-ripple class="item">六</m-ripple></div><div><m-ripple class="item">七</m-ripple></div><div><m-ripple class="item">八</m-ripple></div><div><m-ripple class="item">九</m-ripple></div><div><m-ripple class="item">十</m-ripple></div><div><m-ripple class="item">十一</m-ripple></div><div><m-ripple class="item">十二</m-ripple></div></div></div><m-scrollbar class="year"><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div><div><m-ripple class="item"></m-ripple></div></m-scrollbar></div>`
+const props = ['value', 'max', 'min']
 
-const format = value => {
-  const date = new Date(value)
-  return `${fill(date.getFullYear())}-${fill(date.getMonth() + 1)}-${fill(date.getDate())}`
+const onItem = (el, call) => {
+  el.addEventListener('click', e => {
+    const item = e.composedPath()[0]
+    if (!item.classList.contains('item')) return
+    call(Array.prototype.slice.call(el.children).indexOf(item.parentNode))
+  })
 }
-
-const days = ['日', '一', '二', '三', '四', '五', '六']
 
 const setup = (shadow, node) => {
   const root = shadow.querySelector('.root')
   const title = shadow.querySelector('.head>.title')
-  const subtitle = shadow.querySelector('.head>.subtitle')
-  const text = shadow.querySelector('.switch>.text>m-ripple')
-  const left = shadow.querySelector('.switch>.left')
-  const right = shadow.querySelector('.switch>.right')
-  let date = new Date()
+  const subtitle = shadow.querySelector('.head>.subtitle>div')
+  const text = shadow.querySelector('.switch>.text>.but')
+  const seat = shadow.querySelector('.days>div')
+  const days = shadow.querySelector('.days')
+  const month = shadow.querySelector('.month')
+  const year = shadow.querySelector('.year')
 
-  const list = shadow.querySelector('.list')
-  const seat = shadow.querySelector('.list>.seat')
-  const monthList = shadow.querySelector('.month-list')
-  const yearList = shadow.querySelector('.year-list')
-
-  const getMin = () => {
-    const low = 1969
-    const min = date.getFullYear() - 50
-    return min < low ? low : min
+  let date = new Dated(node.getAttribute('value') || new Date())
+  const scroll = () => {
+    if (!root.classList.contains('show-year')) return
+    const check = year.querySelector('.checked')
+    check.scrollIntoViewIfNeeded ? check.scrollIntoViewIfNeeded() : scrollIntoView()
   }
-
   const render = v => {
-    date = new Date(v)
-    const y = date.getFullYear()
-    const m = date.getMonth()
-    const d = date.getDate()
-    //head
-    title.innerHTML = `${y} 年`
-    subtitle.innerText = `${fill(m + 1)}月${fill(d)}日 周${days[date.getDay()]}`
-    text.innerText = `${y}年 ${fill(m + 1)}月`
-    //list
-    const seats = new Date(y, m, 1).getDay()
+    date = new Dated(v)
+    const { Y, m, d } = date
+    title.innerHTML = `${Y} 年`
+    subtitle.innerText = `${Dated.fill(m + 1)}月${Dated.fill(d)}日 周${['日', '一', '二', '三', '四', '五', '六'][date.getDay()]}`
+    text.innerText = `${Y}年 ${Dated.fill(m + 1)}月`
+    const seats = new Date(Y, m, 1).getDay()
     seat.style.width = seats === 0 ? 0 : `calc((100% / 7) * ${seats})`
-    for (const item of list.querySelectorAll('li.hide')) item.classList.remove('hide')
-    const day = new Date(y, m + 1, 0).getDate()
-    for (let i = list.children.length - 1; i > day; i--) list.children[i].classList.add('hide')
-    const checked = list.querySelector('li.checked')
-    checked && checked.classList.remove('checked')
-    list.children[d].classList.add('checked')
-    //monthList
-    const monthChecked = monthList.querySelector('li.checked')
-    monthChecked && monthChecked.classList.remove('checked')
-    monthList.children[m].classList.add('checked')
-    //yearList
-    const yearChecked = yearList.querySelector('li.checked')
-    yearChecked && yearChecked.classList.remove('checked')
-    const min = getMin()
-    yearList.style.counterReset = `year ${min}`
-    yearList.children[y - min - 1].classList.add('checked')
+    days.querySelector('.checked')?.classList.remove('checked')
+    days.children[d].children[0].classList.add('checked')
+    days.setAttribute('date', new Date(Y, m + 1, 0).getDate())
+    month.querySelector('.checked')?.classList.remove('checked')
+    month.children[m].classList.add('checked')
+    const index = date.Y - 20
+    year.style.counterReset = 'year ' + (index - 1)
+    year.querySelector('.checked')?.classList.remove('checked')
+    const check = year.children[Y - index]
+    check.classList.add('checked')
+    scroll()
   }
-
-  const setValue = v => {
-    const val = format(v)
-    if (format(v) !== format(date)) {
-      const ev = new Event('change')
-      ev.value = val
-      node.dispatchEvent(ev)
-    }
+  const change = v => {
+    if (node.min !== '' && new Dated(node.min).timestamp > v.timestamp) return false
+    if (node.max !== '' && new Dated(node.max).timestamp < v.timestamp) return false
+    const val = v.format()
+    if (val === date.format()) return false
+    const is = v.timestamp > date.timestamp
+    const dtY = is ? 'top' : 'bottom'
+    animationEnd(subtitle, () => subtitle.classList.remove(dtY))
+    subtitle.classList.add(dtY)
     node.value = val
+    const ev = new Event('change')
+    ev.value = val
+    node.dispatchEvent(ev)
   }
-
-  title.addEventListener('click', () => {
-    const name = 'toggle-year'
-    root.classList.toggle(name)
-    if (!root.classList.contains(name)) return
-    const view = yearList.querySelector('li.checked')
-    view.scrollIntoViewIfNeeded ? view.scrollIntoViewIfNeeded() : view.scrollIntoView()
+  title.addEventListener('click', () => root.classList.toggle('show-year') && scroll())
+  const toggle = v => {
+    const dt = v ? 'right' : 'left'
+    const is = change(new Dated(date).setMonth(date.m + (v ? 1 : -1)))
+    if (is === false) return
+    animationEnd(root, () => root.classList.remove(dt))
+    root.classList.add(dt)
+  }
+  shadow.querySelector('.switch>.but').addEventListener('click', () => toggle(false))
+  shadow.querySelector('.switch>.but:last-child').addEventListener('click', () => toggle(true))
+  text.addEventListener('click', () => root.classList.toggle('show-month'))
+  onItem(days, index => change(new Dated(date).setDate(index)))
+  onItem(month, index => change(new Dated(date).setMonth(index)))
+  onItem(year, index => {
+    change(new Dated(date).setFullYear((date.Y - 20) + index))
+    root.classList.remove('show-year')
   })
-
-  left.addEventListener('click', () => setValue(new Date(date.getFullYear(), date.getMonth() - 1, date.getDate())))
-  right.addEventListener('click', () => setValue(new Date(date.getFullYear(), date.getMonth() + 1, date.getDate())))
-  text.addEventListener('click', () => root.classList.toggle('toggle-month'))
-  list.appendChild(createElement(31, v => setValue(new Date(date.getFullYear(), date.getMonth(), v))))
-  for (let i = 0; i < monthList.children.length; i++) {
-    monthList.children[i].children[0].addEventListener('click', () => {
-      root.classList.remove('toggle-month')
-      setValue(new Date(date.getFullYear(), i, date.getDate()))
-    })
-  }
-  yearList.appendChild(createElement(100, v => {
-    setValue(new Date(getMin() + v, date.getMonth(), date.getDate()))
-    root.classList.remove('toggle-year')
-  }))
-
   render(date)
   return {
     value: {
-      get: () => format(date),
-      set: v => render(v),
-      sync: false
+      get: () => date.format(),
+      set: v => render(v)
+    },
+    min: {
+      get: '',
+      set: v => node.min = v === '' ? '' : new Dated(v).format()
+    },
+    max: {
+      get: '',
+      set: v => node.max = v === '' ? '' : new Dated(v).format()
     }
   }
 }

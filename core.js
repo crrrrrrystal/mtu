@@ -1,106 +1,102 @@
 export const global = window.Mtu || (window.Mtu = {})
 
+const useAttr = (node, attrs) => {
+  for (const attr in attrs) {
+    if (['onConnected', 'onDisconnected', 'onAdopted'].includes(attr)) continue
+    const item = attrs[attr]
+    const info = {
+      type: typeof item,
+      value: item
+    }
+    const proxy = {
+      get: () => info.value,
+      set: v => info.value = v
+    }
+    const toType = v => {
+      if (info.type === 'string') return String(v)
+      if (info.type === 'boolean') return v === 'false' ? false : Boolean(v)
+      if (info.type === 'number') return Number(v)
+      return v
+    }
+    Object.defineProperty(node, attr, {
+      get: () => proxy.get(),
+      set: v => {
+        if (node.getAttribute(attr) !== String(v)) return node.setAttribute(attr, v)
+        v = toType(v)
+        if (v === proxy.get()) return
+        proxy.set(v)
+      },
+      enumerable: true
+    })
+    if (Array.isArray(item)) {
+      const v = item[0]
+      info.type = typeof v
+      info.value = v
+      proxy.vlaue = v
+      proxy.set = val => {
+        if (!item.includes(val)) val = v
+        info.value = val
+      }
+      continue
+    }
+    //object
+    if (typeof item !== 'object') continue
+    info.type = typeof item.get
+    info.value = item.get
+    if (typeof item.get === 'function') {
+      const v = item.get()
+      info.type = typeof v
+      info.value = v
+      proxy.get = item.get
+    }
+    if (item.set) {
+      proxy.set = v => {
+        info.value = v
+        item.set(v)
+      }
+    }
+    if (Array.isArray(item.get)) {
+      const v = item.get[0]
+      info.type = typeof v
+      info.value = v
+      proxy.vlaue = v
+      proxy.set = val => {
+        if (!item.includes(val)) val = v
+        info.value = val
+      }
+    }
+  }
+}
+
 export const define = (name, { template = '', props = [], setup = () => { } }) => {
   const custom = window.customElements
-  if (custom.get('m-' + name)) return
-  const list = new Map()
-  custom.define('m-' + name, class extends HTMLElement {
+  const n = 'm-' + name
+  if (custom.get(n)) return
+  const map = new Map()
+  custom.define(n, class extends HTMLElement {
     static observedAttributes = props
     constructor() {
       super()
       const shadow = this.attachShadow({ mode: 'closed' })
       shadow.innerHTML = template
-      const out = setup(shadow, this) || {}
-      list.set(this, out)
-      for (const key in out) {
-        if (['onConnected', 'onDisconnected', 'onAdopted'].indexOf(key) !== -1) continue
-        const item = out[key]
-        //key:any
-        const info = { type: typeof item, value: item }
-        const pro = {
-          get: () => info.value,
-          set: v => info.value = v,
-          sync: true
-        }
-        //key:[]
-        if (Array.isArray(item)) {
-          const val = item[0]
-          info.type = typeof val
-          info.value = val
-          pro.set = v => info.value = item.indexOf(v) === -1 ? val : v
-        }
-        //key:{}
-        if (typeof item === 'object' && !Array.isArray(item)) {
-          if (item.sync === false) pro.sync = false
-          info.type = typeof item.get
-          info.value = item.get
-          if (typeof item.get === 'function') {
-            const val = item.get()
-            info.type = typeof val
-            info.value = val
-            pro.get = item.get
-          }
-          if (typeof item.set === 'function') {
-            pro.set = v => {
-              info.value = v
-              item.set(v)
-            }
-          }
-          if (Array.isArray(item.get)) {
-            const val = item.get[0]
-            info.type = typeof val
-            info.value = val
-            if (typeof item.set === 'function') {
-              pro.set = v => {
-                const tv = item.get.indexOf(v) === -1 ? val : v
-                info.value = tv
-                item.set(tv)
-              }
-            }
-          }
-        }
-        const toType = v => {
-          if (info.type === 'string') return String(v)
-          if (info.type === 'boolean') return v === 'false' ? false : Boolean(v)
-          if (info.type === 'number') return Number(v)
-          return v
-        }
-        Object.defineProperty(this, key, {
-          get: pro.get,
-          set: v => {
-            if (pro.sync && this.getAttribute(key) !== v) return this.setAttribute(key, v)
-            v = toType(v)
-            if (v === pro.get()) return
-            pro.set(v)
-          }
-        })
-      }
+      const attrs = setup(shadow, this) || {}
+      map.set(this, attrs)
+      useAttr(this, attrs)
     }
     attributeChangedCallback(name, old, value) {
-      if (value === null) value = ''
       this[name] = value
     }
     connectedCallback() {
-      const call = list.get(this).onConnected
+      const call = map.get(this).onConnected
       call && call()
     }
     disconnectedCallback() {
-      const call = list.get(this).onDisconnected
+      const call = map.get(this).onDisconnected
       call && call()
     }
     adoptedCallback() {
-      const call = list.get(this).onAdopted
+      const call = map.get(this).onAdopted
       call && call()
     }
   })
-}
-
-export const animationEnd = (view, call) => {
-  view.addEventListener('animationend', call, { once: true })
-  view.addEventListener('animationcancel', call, { once: true })
-}
-
-export const transitionEnd = (view, call) => {
-  view.addEventListener('transitionend', call, { once: true })
-  view.addEventListener('transitioncancel', call, { once: true })
 }

@@ -49,18 +49,15 @@ const setup = (shadow, node) => {
     onDisconnected: clear,
     select: {
       get: 0,
-      set: change,
-      sync: false
+      set: change
     },
     autoplay: {
       get: true,
       set: v => v ? start() : clear(),
-      sync: false
     },
     interval: {
       get: 3000,
-      set: () => start(),
-      sync: false
+      set: () => start()
     }
   }
 }

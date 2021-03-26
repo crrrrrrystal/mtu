@@ -28,8 +28,7 @@ const setup = (shadow, node) => {
     onDisconnected: () => obs.disconnect(),
     select: {
       get: 0,
-      set: v => change(v),
-      sync: false
+      set: v => change(v)
     },
     theme: ['none', 'dark'],
     mode: ['none', 'fixed']

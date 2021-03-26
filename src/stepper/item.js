@@ -8,8 +8,7 @@ const setup = shadow => {
   return {
     key: {
       get: '',
-      set: v => key.innerText = v,
-      sync: false
+      set: v => key.innerText = v
     },
     checked: false
   }

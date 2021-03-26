@@ -34,34 +34,30 @@ const setup = (shadow, node) => {
       set: v => {
         input.value = v
         update()
-      },
-      sync: false
+      }
     },
     max: {
       get: () => Number(input.max),
       set: v => {
         input.max = v
         update()
-      },
-      sync: false
+      }
     },
     min: {
       get: () => Number(input.min),
       set: v => {
         input.min = v
         update()
-      },
-      sync: false
+      }
     },
     step: {
       get: () => Number(input.step),
       set: v => {
         input.step = v
         update()
-      },
-      sync: false
+      }
     }
   }
 }
 
-define('seek', { template, props, setup })
+define('slider', { template, props, setup })

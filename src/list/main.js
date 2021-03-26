@@ -8,8 +8,7 @@ const setup = shadow => {
   return {
     title: {
       get: () => title.innerText,
-      set: v => title.innerText = v,
-      sync: false
+      set: v => title.innerText = v
     }
   }
 }

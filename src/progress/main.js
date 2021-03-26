@@ -18,8 +18,7 @@ const setup = (shadow, node) => {
     },
     max: {
       get: 100,
-      set: v => update(v, node.value),
-      sync: false
+      set: v => update(v, node.value)
     },
     mode: ['circle', 'linear']
   }

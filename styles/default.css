@@ -5,14 +5,14 @@
   src: url(./Roboto-Medium.woff2) format('woff2');
 }
 
-html{
+html {
   font-size: 16px;
   height: 100%;
 }
 
 body {
-  --color-primary: 45,140,240;
-  --color-accent: 45,140,240;
+  --color-primary: 63, 81, 181;
+  --color-accent: 255, 110, 64;
 
   --color-background: #FAFAFA;
   --color-background-bar: #F5F5F5;
@@ -29,21 +29,17 @@ body {
   --color-ripple: rgba(0, 0, 0, .14);
 }
 
-body[theme=dark]{
-  --color-primary: 32,32,32;
-  --color-accent: 128,203,196;
-
+body[theme=dark] {
+  --color-primary: 32, 32, 32;
+  --color-accent: 128, 203, 196;
   --color-background: #303030;
   --color-background-bar: #212121;
   --color-background-card: #424242;
-
-  --color-border: rgba(255,255,255,.12);
-
-  --color-icon: rgba(255,255,255,1);
-  --color-text: rgba(255,255,255,1);
-  --color-text-secondary: rgba(255,255,255,.70);
-  --color-text-disabled: rgba(255,255,255,.50);
-
+  --color-border: rgba(255, 255, 255, .12);
+  --color-icon: rgba(255, 255, 255, 1);
+  --color-text: rgba(255, 255, 255, 1);
+  --color-text-secondary: rgba(255, 255, 255, .70);
+  --color-text-disabled: rgba(255, 255, 255, .50);
   --color-ripple: rgba(255, 255, 255, .4);
 }
 
@@ -56,7 +52,7 @@ body {
   font-weight: 400;
   margin: 0;
   font-size: .9rem;
-  font-family: Roboto,Noto Sans,-apple-system,BlinkMacSystemFont,sans-serif;
+  font-family: Roboto, Noto Sans, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 * {
@@ -64,7 +60,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-::selection{
+::selection {
   background: rgba(var(--color-accent));
   color: #fff;
 }
@@ -73,19 +69,36 @@ body {
   display: none;
 }
 
-m-appbar{
-  z-index:1;
+m-appbar {
+  z-index: 1;
 }
 
 m-drawer::part(mask),
 m-drawer::part(start),
-m-menu::part(body){
+m-menu::part(body) {
   z-index: 2;
 }
 
 m-toast,
-m-dialog,
+m-dialog::part(root),
 m-tooltip::part(root),
-m-date-picker::part(root){
+m-date-picker::part(root),
+m-time-picker::part(root) {
   z-index: 3;
+}
+
+@media (prefers-color-scheme: dark) {
+  body[theme=auto] {
+    --color-primary: 32, 32, 32;
+    --color-accent: 128, 203, 196;
+    --color-background: #303030;
+    --color-background-bar: #212121;
+    --color-background-card: #424242;
+    --color-border: rgba(255, 255, 255, .12);
+    --color-icon: rgba(255, 255, 255, 1);
+    --color-text: rgba(255, 255, 255, 1);
+    --color-text-secondary: rgba(255, 255, 255, .70);
+    --color-text-disabled: rgba(255, 255, 255, .50);
+    --color-ripple: rgba(255, 255, 255, .4);
+  }
 }
