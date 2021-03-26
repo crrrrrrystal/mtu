@@ -69,13 +69,17 @@ import 'mtu/radio'
 Vue.config.ignoredElements = [/^m-/]
 ```
 
-> 如果您使用 `Vite` (Vue3) ，您可能需要在项目根目录创建 `vite.config.js` 来屏蔽组件定义的提示。
+> 如果您使用 `Vite` (Vue3) ，您可能需要在项目 `vite.config.js` 中设置屏蔽组件定义的提示。
 
 ```js
-module.exports = {
-  vueCompilerOptions: {
-    isCustomElement: tag => /^m-/.test(tag)
-  }
+export default {
+  plugins: [vue({
+    template: {
+      compilerOptions: {
+        isCustomElement: tag => /^m-/.test(tag)
+      }
+    }
+  })],
 }
 ```
 
