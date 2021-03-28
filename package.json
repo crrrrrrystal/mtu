@@ -1,6 +1,6 @@
 {
   "name": "mtu",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "响应式跨平台框架的 Material Design UI 组件库",
   "scripts": {
     "dev": "node dev.js",
@@ -16,6 +16,7 @@
   "bugs": "https://github.com/apprat/mtu/issues",
   "exports": {
     ".": "./main.js",
+    "./core": "./core.js",
     "./style": "./styles/default.css",
     "./appbar": "./src/appbar/main.js",
     "./button": "./src/button/main.js",
