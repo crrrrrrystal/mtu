@@ -69,23 +69,6 @@ body {
   display: none;
 }
 
-m-appbar {
-  z-index: 1;
-}
-
-m-drawer::part(mask),
-m-drawer::part(start),
-m-menu::part(body) {
-  z-index: 2;
-}
-
-m-toast,
-m-dialog::part(root),
-m-tooltip::part(root),
-m-date-picker::part(root),
-m-time-picker::part(root) {
-  z-index: 3;
-}
 
 @media (prefers-color-scheme: dark) {
   body[theme=auto] {
