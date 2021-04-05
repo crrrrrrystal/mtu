@@ -1,6 +1,6 @@
 {
   "name": "mtu",
-  "version": "0.2.71",
+  "version": "0.2.72",
   "description": "响应式跨平台框架的 Material Design UI 组件库",
   "scripts": {
     "dev": "node dev.js",

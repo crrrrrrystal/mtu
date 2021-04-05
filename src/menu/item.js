@@ -17,7 +17,7 @@ const setup = (shadow, node) => {
       get: () => title.innerText,
       set: v => {
         title.innerText = v
-        tooltip.setAttribute('text', v)
+        tooltip.setAttribute('value', v)
       }
     }
   }
