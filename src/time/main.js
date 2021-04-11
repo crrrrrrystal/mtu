@@ -64,9 +64,7 @@ const setup = (shadow, node) => {
   }
 
   const change = () => {
-    const ev = new Event('change')
-    ev.value = time.format()
-    node.dispatchEvent(ev)
+    node.dispatchEvent(new Event('change'))
     render()
   }
 

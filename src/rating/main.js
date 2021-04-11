@@ -6,11 +6,7 @@ const props = ['disabled', 'value', 'max', 'min', 'step']
 const setup = (shadow, node) => {
   const input = shadow.querySelector('input')
   const bar = shadow.querySelector('.bar')
-  const on = t => {
-    const ev = new Event(t)
-    ev.value = input.value
-    node.dispatchEvent(ev)
-  }
+  const on = t => node.dispatchEvent(new Event(t))
   const update = () => bar.style.width = (input.value * 100 / input.max) + '%'
 
   input.addEventListener('input', e => {

@@ -33,7 +33,7 @@ body[theme=dark] {
   --color-primary: 32, 32, 32;
   --color-accent: 128, 203, 196;
   --color-background: #303030;
-  --color-background-bar: #212121;
+  --color-background-bar: #383838;
   --color-background-card: #424242;
   --color-border: rgba(255, 255, 255, .12);
   --color-icon: rgba(255, 255, 255, 1);
@@ -75,7 +75,7 @@ body {
     --color-primary: 32, 32, 32;
     --color-accent: 128, 203, 196;
     --color-background: #303030;
-    --color-background-bar: #212121;
+    --color-background-bar: #383838;
     --color-background-card: #424242;
     --color-border: rgba(255, 255, 255, .12);
     --color-icon: rgba(255, 255, 255, 1);

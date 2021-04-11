@@ -96,9 +96,7 @@ const setup = (shadow, node) => {
     animationEnd(subtitle, () => subtitle.classList.remove(dtY))
     subtitle.classList.add(dtY)
     node.value = val
-    const ev = new Event('change')
-    ev.value = val
-    node.dispatchEvent(ev)
+    node.dispatchEvent(new Event('change'))
   }
   title.addEventListener('click', () => root.classList.toggle('show-year') && scroll())
   const toggle = v => {

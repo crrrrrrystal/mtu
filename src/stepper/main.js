@@ -5,7 +5,7 @@ const props = ['mode']
 
 const setup = () => {
   return {
-    mode: ['vert', 'horiz']
+    mode: ['normal', 'horiz']
   }
 }
 

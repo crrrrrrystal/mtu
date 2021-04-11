@@ -20,9 +20,7 @@ const setup = (shadow, node) => {
     close()
     if (node.value !== date.value) {
       node.value = date.value
-      const ev = new Event('change')
-      ev.value = date.value
-      node.dispatchEvent(ev)
+      node.dispatchEvent(new Event('change'))
     }
   })
 

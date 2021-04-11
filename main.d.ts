@@ -9,7 +9,7 @@ declare interface Window {
       negative?: string
       onNegative?(): void
       onClose?(): void
-      size?: 'none' | 'medium' | 'full'
+      size?: 'normal' | 'large' | 'full'
     }): void
   }
 }
