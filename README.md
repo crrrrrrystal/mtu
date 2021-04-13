@@ -39,8 +39,8 @@ import 'mtu/radio'
 ## CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mtu/dist/mtu.min.css">
-<script src="https://cdn.jsdelivr.net/npm/mtu/dist/mtu.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/mtu/dist/mtu.min.css">
+<script src="https://unpkg.com/mtu/dist/mtu.min.js"></script>
 ```
 
 ## 兼容性
@@ -79,7 +79,7 @@ export default {
         isCustomElement: tag => /^m-/.test(tag)
       }
     }
-  })],
+  })]
 }
 ```
 

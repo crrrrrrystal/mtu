@@ -7,7 +7,10 @@ const setup = (shadow, node) => {
   const input = shadow.querySelector('input')
   const bar = shadow.querySelector('.bar')
   const on = t => node.dispatchEvent(new Event(t))
-  const update = () => bar.style.width = (input.value * 100 / input.max) + '%'
+  const update = () => {
+    const v = ((input.value - input.min) * 100) / (input.max - input.min)
+    bar.style.width = v + '%'
+  }
 
   input.addEventListener('input', e => {
     e.stopPropagation()
