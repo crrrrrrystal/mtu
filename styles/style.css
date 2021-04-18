@@ -67,7 +67,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body[theme=auto] {
-    --color-primary: 32, 32, 32;
+    --color-primary: 144, 202, 249;
     --color-accent: 128, 203, 196;
     --color-background: #303030;
     --color-background-bar: #383838;

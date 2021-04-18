@@ -26,13 +26,14 @@ const setup = (shadow, node) => {
     animationEnd(anime, () => anime.removeAttribute('style'))
     anime.setAttribute('style', `width:${diameter}px;height:${diameter}px;--x:${x}px;--y:${y}px;animation:anime .2s`)
     ripple.classList.add('show')
-    //ripple.setAttribute('style', 'animation:ripple 0s ease .2s;animation-fill-mode: forwards')
     isDown = true
+    node.setAttribute('active', 'active')
   }
   const up = () => {
     if (isDown === false) return
     ripple.classList.remove('show')
     isDown = false
+    node.removeAttribute('active')
   }
 
   node.addEventListener('mousedown', e => isMouse && down(e))
