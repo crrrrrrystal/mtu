@@ -1,6 +1,6 @@
 {
   "name": "mtu",
-  "version": "0.2.85",
+  "version": "0.2.9",
   "description": "响应式跨平台框架的 Material Design UI 组件库",
   "scripts": {
     "dev": "node dev.js",
@@ -57,6 +57,8 @@
     "./tr": "./src/table/tr.js",
     "./time": "./src/time/main.js",
     "./time-picker": "./src/time/picker.js",
+    "./timeline": "./src/timeline/main.js",
+    "./timeline-item": "./src/timeline/item.js",
     "./toast": "./src/toast/main.js",
     "./tooltip": "./src/tooltip/main.js"
   },

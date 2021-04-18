@@ -1,17 +1,4 @@
 import { define } from '../../core.js'
 
-const template = `<style>:host{display:flex;position:relative;flex-basis:100%;align-items:center}:host([checked=true]) ::slotted([slot=icon]){color:rgba(var(--color-accent))}:host([checked=true]) .ic{background:rgba(var(--color-accent))}:host([checked=true]) .title{color:var(--color-text)}.head{display:flex;align-items:center;justify-content:var(--stepper-item-head-justify-content,normal);height:56px;user-select:none}[name=icon]{display:flex;align-items:center;justify-content:center;height:24px;width:24px}.ic{width:18px;height:18px;border-radius:50%;background:var(--color-text-disabled);font-size:.75rem;color:#fff;display:flex;justify-content:center;align-items:center;line-height:1}.title{margin-left:var(--stepper-item-title-margin-left,16px);color:var(--color-text-secondary);line-height:1;font-size:var(--stepper-item-title-font-size,1rem);flex-shrink:0}::slotted(:not([slot])){margin:0 0 0 40px;display:var(--stepper-item-body-display,block)}</style><div class="root" part="root"><div class="head"><slot name="icon"><div class="ic">1</div></slot><div class="title"><slot name="title"></slot></div></div><div class="body"><slot></slot></div></div>`
-const props = ['value', 'checked']
-
-const setup = shadow => {
-  const value = shadow.querySelector('.ic')
-  return {
-    value: {
-      get: '',
-      set: v => value.innerText = v
-    },
-    checked: false
-  }
-}
-
-define('stepper-item', { template, props, setup })
+const template = `<style>:host{display:flex;flex-basis:100%;color:var(--color-text-secondary)}.root{display:flex;align-items:center;flex-direction:column;width:100%}.body{display:flex;align-items:center;width:100%;padding:16px 0}.body::before,.body::after{content:'';flex-grow:1;height:1px;background:#bdbdbd}:host(:first-of-type) .body::before,:host(:last-of-type) .body::after{opacity:0}::slotted([slot=start]){margin:0 8px;color:var(--stepper-item-color,var(--color-icon));display:var(--stepper-item-start-display,flex);width:24px;height:24px;border-radius:50%;background:var(--stepper-item-color,#9e9e9e);justify-content:center;align-items:center;overflow:hidden;font-size:.75rem;color:#fff}.done{margin:0 8px;width:24px;height:24px;fill:rgba(var(--color-accent));display:var(--stepper-item-done-display,none)}::slotted([slot=title]){margin-right:8px;font-size:.875rem;user-select:none}::slotted(:not([slot])){text-align:center;margin-bottom:16px;padding:0 8px}</style><div class="root" part="root"><div class="body"><slot name="start" class="start"></slot><svg viewBox="0 0 24 24" class="done"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm-2 17l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"></path></svg><div class="text"><slot name="title"></slot></div></div><slot></slot></div>`
+define('stepper-item', { template })

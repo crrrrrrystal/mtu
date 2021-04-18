@@ -39,6 +39,7 @@ const setup = (shadow, node) => {
     mask = clickAway(node, close)
   }
   body.addEventListener('click', e => {
+    if (node.mode.indexOf('auto') === 0 && window.innerWidth > 720) return
     const path = []
     for (const item of e.composedPath()) item.tagName && path.push(item.tagName)
     if (!path.includes('M-MENU-ITEM')) return
