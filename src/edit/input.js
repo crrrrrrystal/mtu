@@ -11,7 +11,10 @@ const setup = (shadow, node) => {
   input.addEventListener('focus', () => root.classList.add('focus'))
   input.addEventListener('blur', () => root.classList.remove('focus'))
   const isEmpty = () => root.classList[input.value === '' ? 'remove' : 'add']('empty')
-  input.addEventListener('change', isEmpty)
+  input.addEventListener('change', () => {
+    isEmpty()
+    node.dispatchEvent(new Event('change'))
+  })
   return {
     disabled: false,
     type: {
