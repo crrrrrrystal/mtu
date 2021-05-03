@@ -1,9 +1,10 @@
 {
   "name": "mtu",
-  "version": "0.3.02",
+  "version": "0.3.21",
   "description": "响应式跨平台框架的 Material Design UI 组件库",
   "scripts": {
-    "dev": "node dev.js",
+    "dev": "node dev/core/server.js",
+    "devBuild": "node dev/core/build.js",
     "build": "rollup -c"
   },
   "type": "module",
@@ -71,5 +72,13 @@
     "跨平台",
     "跨框架",
     "UI框架"
-  ]
+  ],
+  "devDependencies": {
+    "@henrikjoreteg/rollup-plugin-css": "^2.0.0",
+    "html-minifier": "^4.0.0",
+    "mime-types": "^2.1.30",
+    "node-html-parser": "^3.2.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "js-beautify": "^1.13.13"
+  }
 }

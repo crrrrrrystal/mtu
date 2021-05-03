@@ -6,6 +6,10 @@ $ npm i mtu
 
 > 完全响应式跨框架的UI组件库，基于 [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 封装，兼容 `React` 、 `Vue` 等前端框架，或者在 `electron` 中引入，设计规范参考了 Google  [Material Design](https://material-io.cn/)，并针对移动端做了优化，适用于需要同时兼容移动端的Web项目，门户网站、后台管理系统等。
 
+## 开发文档
+
+[https://mtu.desgin](https://apprat.gitee.io/mtu-docs)
+
 ### 优势
 
 - [x] 响应式；自适应不同分辨率设备，并在窗口或组件发生变化时更新样式(横屏竖屏)。
@@ -56,7 +60,4 @@ import 'mtu/radio'
 | Safari on iOS       | 10+  |
 | Samsung Internet    | 5+   |
 
-## 开发文档
-
-[https://mtu.desgin](https://apprat.gitee.io/mtu-docs)
 ---

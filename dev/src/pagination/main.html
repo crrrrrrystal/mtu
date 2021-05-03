@@ -1,0 +1,25 @@
+<div>
+  <m-pagination>
+    Types
+  </m-pagination>
+</div>
+
+<template>
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <slot></slot>
+</template>
+<script type="module">
+  import { define } from '../../core.js'
+
+  const template = $template
+  const props = []
+  const setup = () => {
+
+  }
+
+  define('pagination', { template, props, setup })
+</script>
