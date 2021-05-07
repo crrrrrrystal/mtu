@@ -1,6 +1,6 @@
 {
   "name": "mtu",
-  "version": "0.3.21",
+  "version": "0.3.22",
   "description": "响应式跨平台框架的 Material Design UI 组件库",
   "scripts": {
     "dev": "node dev/core/server.js",
@@ -37,6 +37,7 @@
     "./menu": "./src/menu/main.js",
     "./menu-group": "./src/menu/group.js",
     "./menu-item": "./src/menu/item.js",
+    "./pagination": "./src/pagination/main.js",
     "./progress": "./src/progress/main.js",
     "./radio": "./src/radio/main.js",
     "./rating": "./src/rating/main.js",
