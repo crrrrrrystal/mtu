@@ -18,8 +18,9 @@ const setup = (shadow, node) => {
   }
   body.addEventListener('click', e => {
     if (e.target.tagName !== 'M-TAB-ITEM') return
-    node.select = [].slice.call(node.children).indexOf(e.target)
-    node.dispatchEvent(new Event('change'))
+    const v = [].slice.call(node.children).indexOf(e.target)
+    if (v !== node.select) node.dispatchEvent(new Event('change'))
+    node.select = v
   })
   new ResizeObserver(() => {
     bar.classList.add('noAnime')

@@ -1,11 +1,11 @@
 {
   "name": "mtu",
-  "version": "0.3.22",
+  "version": "0.4.0",
   "description": "响应式跨平台框架的 Material Design UI 组件库",
   "scripts": {
     "dev": "node dev/core/server.js",
-    "devBuild": "node dev/core/build.js",
-    "build": "rollup -c"
+    "build": "node dev/core/build.js",
+    "rollup": "rollup -c"
   },
   "type": "module",
   "main": "main.js",
@@ -20,6 +20,8 @@
     "./core": "./core.js",
     "./style": "./styles/style.css",
     "./appbar": "./src/appbar/main.js",
+    "./bottom-navigation": "./src/bottom-navigation/main.js",
+    "./bottom-navigation-item": "./src/bottom-navigation/item.js",
     "./button": "./src/button/main.js",
     "./card": "./src/card/main.js",
     "./carousel": "./src/carousel/main.js",
@@ -31,6 +33,7 @@
     "./dialog": "./src/dialog/main.js",
     "./drawer": "./src/drawer/main.js",
     "./edit-input": "./src/edit/input.js",
+    "./edit-textarea": "./src/edit/textarea.js",
     "./icon": "./src/icon/main.js",
     "./list": "./src/list/main.js",
     "./list-item": "./src/list/item.js",

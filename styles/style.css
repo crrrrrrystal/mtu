@@ -19,7 +19,7 @@ body {
   --color-border: rgba(0, 0, 0, .12);
   --color-icon: rgba(0, 0, 0, .54);
   --color-text: rgba(0, 0, 0, .87);
-  --color-text-secondary: rgba(0, 0, 0, .54);
+  --color-text-secondary: rgba(0, 0, 0, .6);
   --color-text-disabled: rgba(0, 0, 0, .38);
   --color-ripple: rgba(0, 0, 0, .14);
 }
@@ -48,6 +48,7 @@ body {
   margin: 0;
   font-size: .9rem;
   font-family: Roboto, Noto Sans, -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background .2s;
 }
 
 * {
@@ -67,7 +68,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body[theme=auto] {
-    --color-primary: 144, 202, 249;
+    --color-primary: 32, 32, 32;
     --color-accent: 128, 203, 196;
     --color-background: #303030;
     --color-background-bar: #383838;

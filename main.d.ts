@@ -1,6 +1,10 @@
 declare interface Window {
   Mtu: {
-    toast(msg: string, time?: number): void
+    toast(text: string, options?: {
+      action?: string
+      onClose?(): void,
+      duration?: number
+    }): void
     dialog(option?: {
       title?: string
       message?: string

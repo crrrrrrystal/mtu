@@ -1,25 +1,40 @@
 import { global, define } from '../../core.js'
-import { transitionEnd } from '../../util.js'
+import '../ripple/main.js'
 
-const template = `<style>:host{z-index:3;display:flex;width:100%;position:fixed;justify-content:center;pointer-events:none;user-select:none;transform:translateY(-100%);opacity:0;transition:transform .2s,opacity .2s;top:0;left:0}:host([state=true]){opacity:1;transform:translateY(0%)}.root{box-shadow:0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12);background:var(--color-background-card);margin:24px;border-radius:24px;display:flex;align-items:center;padding:8px 16px;min-height:40px;max-width:280px;fill:var(--color-icon);box-sizing:border-box}.icon{fill:inherit;width:24px;height:24px;flex-shrink:0}.title{letter-spacing:1px;line-height:1.6;margin-left:8px;word-break:break-all}</style><div class="root" part="root"><svg viewBox="0 0 1024 1024" class="icon" part="icon"><path d="M554.666667 384h-85.333334V298.666667h85.333334m0 426.666666h-85.333334v-256h85.333334m-42.666667-384A426.666667 426.666667 0 0 0 85.333333 512a426.666667 426.666667 0 0 0 426.666667 426.666667 426.666667 426.666667 0 0 0 426.666667-426.666667A426.666667 426.666667 0 0 0 512 85.333333z"></path></svg><div class="title" part="title"><slot></slot></div></div>`
-const props = ['state']
+const template = `<style>:host{display:inline-block;vertical-align:middle}.root{z-index:3;display:flex;width:100%;position:fixed;justify-content:center;pointer-events:none;user-select:none;top:0;left:0}.body{box-shadow:0 3px 5px -1px rgb(0 0 0 / 20%),0 6px 10px 0 rgb(0 0 0 / 14%),0 1px 18px 0 rgb(0 0 0 / 12%);background:#323232;border-radius:4px;display:flex;align-items:center;justify-content:space-between;min-height:48px;max-width:344px;width:100%;color:rgba(255,255,255,.7);box-sizing:border-box;margin:24px 16px;pointer-events:auto;filter:opacity(0);transform:scale(.8);transition:filter .2s,transform .2s}:host([state=true]) .body{filter:opacity(1);transform:scale(1)}.text{letter-spacing:1px;line-height:1.6;margin:8px 16px;word-break:break-all}.action{color:rgba(var(--color-accent));cursor:pointer;height:32px;min-width:36px;overflow:hidden;border-radius:2px;padding:0 8px;display:flex;align-items:center;justify-content:center;margin:0 8px 0 -8px;text-transform:uppercase;font-size:.875rem;--color-ripple:rgba(var(--color-accent), .24)}.action:empty{display:none}</style><slot name="active"></slot><div class="root" part="root"><div class="body" part="body"><div class="text" part="text"><slot></slot></div><m-ripple class="action"></m-ripple></div></div>`
+const props = ['state', 'action']
 
-const setup = () => {
+const setup = (shadow, node) => {
+  const slot = shadow.querySelector('slot')
+  const action = shadow.querySelector('.action')
+  slot.addEventListener('click', () => node.state = true)
+  action.addEventListener('click', () => {
+    node.dispatchEvent(new Event('close'))
+    node.state = false
+  })
   return {
-    state: false
+    state: false,
+    action: {
+      get: () => action.innerText,
+      set: v => action.innerText = v
+    }
   }
 }
 
 define('toast', { template, props, setup })
 
-global.toast = (text, time = 3000) => {
-  const t = document.createElement('m-toast')
-  t.innerText = text
-  document.body.appendChild(t)
-  window.getComputedStyle(t).top
-  t.state = true
-  setTimeout(() => {
-    transitionEnd(t, () => document.body.removeChild(t))
-    t.state = false
-  }, time)
+const dom = document.createElement('m-toast')
+global.toast = (text, { action = '', onClose, duration = 3000 } = {}) => {
+  document.body.appendChild(dom)
+  const o = document.querySelector('body>m-toast')
+  if (o && o.state === true) {
+    clearTimeout(dom.setTimeout)
+    o.state = false
+  }
+  dom.action = action
+  onClose && (dom.onclose = onClose)
+  dom.innerText = text
+  window.getComputedStyle(dom).top
+  dom.state = true
+  if (duration > 0) dom.setTimeout = setTimeout(() => dom.state = false, duration)
 }
