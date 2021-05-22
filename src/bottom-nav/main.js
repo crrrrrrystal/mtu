@@ -9,7 +9,7 @@ const setup = (shadow, node) => {
   root.addEventListener('click', e => {
     const path = []
     for (const item of e.composedPath()) item.tagName && path.push(item.tagName)
-    if (!path.includes('M-BOTTOM-NAVIGATION-ITEM')) return
+    if (!path.includes('M-BOTTOM-NAV-ITEM')) return
     const v = [].slice.call(node.children).indexOf(e.target)
     if (v !== node.select) node.dispatchEvent(new Event('change'))
     node.select = v
@@ -23,4 +23,4 @@ const setup = (shadow, node) => {
   }
 }
 
-define('bottom-navigation', { template, props, setup })
+define('bottom-nav', { template, props, setup })

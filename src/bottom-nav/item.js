@@ -9,4 +9,4 @@ const setup = () => {
   }
 }
 
-define('bottom-navigation-item', { template, setup, props })
+define('bottom-nav-item', { template, setup, props })

@@ -1,6 +1,6 @@
 import './src/appbar/main.js'
-import './src/bottom-navigation/main.js'
-import './src/bottom-navigation/item.js'
+import './src/bottom-nav/main.js'
+import './src/bottom-nav/item.js'
 import './src/button/main.js'
 import './src/card/main.js'
 import './src/carousel/main.js'

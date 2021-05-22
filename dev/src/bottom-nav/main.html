@@ -1,41 +1,41 @@
 <div>
-  <m-bottom-navigation onchange="console.log('change')">
-    <m-bottom-navigation-item>
+  <m-bottom-nav onchange="console.log('change')">
+    <m-bottom-nav-item>
       <m-icon value="brightness_low"></m-icon>
       首页
-    </m-bottom-navigation-item>
-    <m-bottom-navigation-item>
+    </m-bottom-nav-item>
+    <m-bottom-nav-item>
       <m-icon value="camera"></m-icon>
       相机
-    </m-bottom-navigation-item>
-    <m-bottom-navigation-item>
+    </m-bottom-nav-item>
+    <m-bottom-nav-item>
       <m-icon value="color_lens"></m-icon>
       主题
-    </m-bottom-navigation-item>
-    <m-bottom-navigation-item>
+    </m-bottom-nav-item>
+    <m-bottom-nav-item>
       <m-icon value="group"></m-icon>
       我的
-    </m-bottom-navigation-item>
-  </m-bottom-navigation>
+    </m-bottom-nav-item>
+  </m-bottom-nav>
 
-  <m-bottom-navigation theme="dark">
-    <m-bottom-navigation-item>
+  <m-bottom-nav theme="dark">
+    <m-bottom-nav-item>
       <m-icon value="brightness_low"></m-icon>
       首页
-    </m-bottom-navigation-item>
-    <m-bottom-navigation-item>
+    </m-bottom-nav-item>
+    <m-bottom-nav-item>
       <m-icon value="camera"></m-icon>
       相机
-    </m-bottom-navigation-item>
-    <m-bottom-navigation-item>
+    </m-bottom-nav-item>
+    <m-bottom-nav-item>
       <m-icon value="color_lens"></m-icon>
       主题
-    </m-bottom-navigation-item>
-    <m-bottom-navigation-item>
+    </m-bottom-nav-item>
+    <m-bottom-nav-item>
       <m-icon value="group"></m-icon>
       我的
-    </m-bottom-navigation-item>
-  </m-bottom-navigation>
+    </m-bottom-nav-item>
+  </m-bottom-nav>
 </div>
 
 <template>
@@ -97,7 +97,7 @@
     root.addEventListener('click', e => {
       const path = []
       for (const item of e.composedPath()) item.tagName && path.push(item.tagName)
-      if (!path.includes('M-BOTTOM-NAVIGATION-ITEM')) return
+      if (!path.includes('M-BOTTOM-NAV-ITEM')) return
       const v = [].slice.call(node.children).indexOf(e.target)
       if (v !== node.select) node.dispatchEvent(new Event('change'))
       node.select = v
@@ -111,5 +111,5 @@
     }
   }
 
-  define('bottom-navigation', { template, props, setup })
+  define('bottom-nav', { template, props, setup })
 </script>
