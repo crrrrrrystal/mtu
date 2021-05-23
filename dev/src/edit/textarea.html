@@ -12,6 +12,12 @@
       border-radius: 2px;
     }
 
+    :host([disabled=true]) {
+      pointer-events: none;
+      filter: grayscale(1);
+      opacity: .6;
+    }
+
     .root {
       position: relative;
       min-height: inherit;
