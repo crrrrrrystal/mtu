@@ -68,7 +68,13 @@ const useAttr = (node, attrs) => {
   }
 }
 
-export const define = (name, { template = '', props = [], setup = () => { } }) => {
+export const define = (name, {
+  template = '',
+  props = [],
+  setup = new Function(),
+  options = {},
+  shadowRootInit: { mode = 'closed', delegatesFocus = true } = {}
+}) => {
   const custom = window.customElements
   const n = 'm-' + name
   if (custom.get(n)) return
@@ -77,7 +83,7 @@ export const define = (name, { template = '', props = [], setup = () => { } }) =
     static observedAttributes = props
     constructor() {
       super()
-      const shadow = this.attachShadow({ mode: 'closed' })
+      const shadow = this.attachShadow({ mode, delegatesFocus })
       shadow.innerHTML = template
       const attrs = setup(shadow, this) || {}
       map.set(this, attrs)
@@ -98,5 +104,5 @@ export const define = (name, { template = '', props = [], setup = () => { } }) =
       const call = map.get(this).onAdopted
       call && call()
     }
-  })
+  }, options)
 }
