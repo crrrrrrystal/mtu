@@ -39,6 +39,7 @@
       overflow: auto;
       overflow: overlay;
       scrollbar-width: thin;
+      display: block;
     }
 
     .text::placeholder {
@@ -58,7 +59,7 @@
       position: absolute;
       left: 0;
       opacity: 0;
-      bottom: 0;
+      top: 0;
       pointer-events: none;
       min-height: 0;
       max-height: 0;
@@ -82,6 +83,8 @@
     }
     text.addEventListener('input', update)
     text.addEventListener('change', () => node.dispatchEvent(new Event('change')))
+    const obs = new ResizeObserver(update)
+    obs.observe(node, { box: 'border-box' })
     return {
       onConnected: update,
       onAdopte: update,
