@@ -3,6 +3,8 @@
     <button slot="active">active</button>
     请在添加数据库后
   </m-toast>
+
+  <button onclick="window.Mtu.toast('你好',{action:'知道了',onClose:(e)=>console.log(e)})">打开</button>
 </div>
 
 <template>
@@ -20,7 +22,7 @@
       justify-content: center;
       pointer-events: none;
       user-select: none;
-      bottom: 0;
+      top: 0;
       left: 0
     }
 
@@ -36,7 +38,7 @@
       width: 100%;
       color: rgba(255, 255, 255, .7);
       box-sizing: border-box;
-      margin: 48px 16px;
+      margin: 24px 16px;
       pointer-events: auto;
       filter: opacity(0);
       transform: scale(.8);
@@ -74,13 +76,6 @@
 
     .action:empty {
       display: none;
-    }
-
-    @media (max-width: 720px) {
-      .root {
-        top: 0;
-        bottom: auto;
-      }
     }
   </style>
   <slot name="active"></slot>
@@ -129,7 +124,10 @@
       o.state = false
     }
     dom.action = action
-    onClose && (dom.onclose = onClose)
+    dom.onclose = (e) => {
+      clearTimeout(dom.setTimeout)
+      onClose && onClose(e)
+    }
     dom.innerText = text
     window.getComputedStyle(dom).top
     dom.state = true
