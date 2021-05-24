@@ -24,6 +24,7 @@ const setup = (shadow, node) => {
 define('toast', { template, props, setup })
 
 const dom = document.createElement('m-toast')
+dom.style.display = 'inline'
 global.toast = (text, { action = '', onClose, duration = 3000 } = {}) => {
   document.body.appendChild(dom)
   const o = document.querySelector('body>m-toast')

@@ -30,4 +30,6 @@ const setup = (shadow, node) => {
   }
 }
 
-define('edit-textarea', { template, props, setup })
+const shadowRootInit = { delegatesFocus: true }
+
+define('edit-textarea', { template, props, setup, shadowRootInit })

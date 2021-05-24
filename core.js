@@ -73,7 +73,7 @@ export const define = (name, {
   props = [],
   setup = new Function(),
   options = {},
-  shadowRootInit: { mode = 'closed', delegatesFocus = true } = {}
+  shadowRootInit: { mode = 'closed', delegatesFocus = false } = {}
 }) => {
   const custom = window.customElements
   const n = 'm-' + name
