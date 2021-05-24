@@ -20,7 +20,7 @@
       justify-content: center;
       pointer-events: none;
       user-select: none;
-      top: 0;
+      bottom: 0;
       left: 0
     }
 
@@ -36,7 +36,7 @@
       width: 100%;
       color: rgba(255, 255, 255, .7);
       box-sizing: border-box;
-      margin: 24px 16px;
+      margin: 48px 16px;
       pointer-events: auto;
       filter: opacity(0);
       transform: scale(.8);
@@ -74,6 +74,13 @@
 
     .action:empty {
       display: none;
+    }
+
+    @media (max-width: 720px) {
+      .root {
+        top: 0;
+        bottom: auto;
+      }
     }
   </style>
   <slot name="active"></slot>
