@@ -2,7 +2,7 @@
   <div style="margin: 200px 0;"></div>
   <m-slider endvalue="50"></m-slider>
   <div style="margin: 200px 0;"></div>
-  <m-slider range="true" startvalue="88886" min="10000" max="100000"></m-slider>
+  <m-slider range="true" startvalue="88886" min="10000" max="100000" disabled="true"></m-slider>
 </div>
 
 <template>
@@ -17,6 +17,14 @@
       pointer-events: none;
       filter: grayscale(1);
       opacity: .6
+    }
+
+    :host([disabled=true]) input::-webkit-slider-thumb {
+      pointer-events: none;
+    }
+
+    :host([disabled=true]) input::-moz-range-thumb {
+      pointer-events: none;
     }
 
     .body {
